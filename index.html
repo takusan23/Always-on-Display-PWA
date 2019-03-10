@@ -85,7 +85,7 @@
     //バッテリー状態
     function getBatteryLevel() {
         var battery_text = document.getElementById('battery_text');
-        if (navigator.level != undefined) {
+        if (navigator.level + '%' != 'undefined%') {
             //電池取得できた
             var text = navigator.level + '%';
             text += returnCharge(navigator.charging);
