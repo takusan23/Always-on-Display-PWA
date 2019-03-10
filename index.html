@@ -85,13 +85,17 @@
     //バッテリー状態
     function getBatteryLevel() {
         var battery_text = document.getElementById('battery_text');
+        //電池取得できた
+        var text = navigator.level + '%';
+        text += returnCharge(navigator.charging);
+        battery_text.innerText = text;
         if (navigator.level + '%' != 'undefined%') {
             //電池取得できた
             var text = navigator.level + '%';
             text += returnCharge(navigator.charging);
             battery_text.innerText = text;
         } else {
-            battery_text.innerText = '';
+            //battery_text.innerText = '';
         }
     }
     //10秒ごとにバッテリー残量通知する関数を呼ぶ
