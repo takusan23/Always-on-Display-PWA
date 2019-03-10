@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AOD PWA</title>
+</head>
+
+<body bgcolor="#000000" onload="showTime();">
+    <div id="space" style="height:100px;"></div>
+    <div id="main">
+        <div align="center" id="time_div">
+            <font color="#ffffff" id="time_text" size="6"></font>
+        </div>
+        <div align="center" id="day_div">
+            <font color="#ffffff" id="day_text" size="5"></font>
+        </div>
+        <div align="center" id="battery_div">
+            <font color="#ffffff" id="battery_text" size="4"></font>
+        </div>
+    </div>
+
+
+</body>
+
+<script>
+    var position = 0;
+    var height_position = 100;
+    //時間表示
+    function showTime() {
+        var text = document.getElementById('time_text');
+        var day = document.getElementById('day_text');
+        var dd = new Date();
+        //時間
+        var time_string = dd.getHours() + '時' + dd.getMinutes() + '分' + dd.getSeconds() + '秒';
+        //年月日
+        var date_string = dd.getFullYear() + '年' + (dd.getMonth() + 1) + '月' + dd.getDate() + '日 ' + getWeek(dd.getDay()) + '日';
+        text.innerText = time_string;
+        day.innerText = date_string;
+    }
+    //一秒ごとに時間出す関数を呼ぶ
+    setInterval('showTime()', 1000);
+
+    //位置変更
+    function changePosition() {
+        var time_div = document.getElementById('time_div');
+        var day_div = document.getElementById('day_div');
+        var battery_div = document.getElementById('battery_div');
+        if (position == 0) {
+            time_div.style.textAlign = 'right';
+            day_div.style.textAlign = 'right';
+            battery_div.style.textAlign = 'right';
+            position = 1;
+        } else if (position == 1) {
+            time_div.style.textAlign = 'center';
+            day_div.style.textAlign = 'center';
+            battery_div.style.textAlign = 'center';
+            position = 2;
+        } else {
+            time_div.style.textAlign = 'left';
+            day_div.style.textAlign = 'left';
+            battery_div.style.textAlign = 'left';
+            position = 0;
+        }
+    }
+    //10秒ごとに位置変更する関数を呼ぶ
+    setInterval('changePosition()', 10000);
+
+    //縦のいち
+    function changeHeightPosition() {
+        var space = document.getElementById('space');
+        //適当に
+        space.style.height = height_position + 'px';
+        height_position += 200;
+        //適当にリセット
+        if (position == 2) {
+            height_position = 100;
+        }
+    }
+    //10秒ごとに縦の位置変更する関数を呼ぶ
+    setInterval('changeHeightPosition()', 10000);
+
+    //バッテリー状態
+    function getBatteryLevel() {
+        var battery_text = document.getElementById('battery_text');
+        if (navigator.level != undefined) {
+            //電池取得できた
+            var text = navigator.level + '%';
+            text += returnCharge(navigator.charging);
+            battery_text.innerText = text;
+        } else {
+            battery_text.innerText = '';
+        }
+    }
+
+    //充電・放電
+    function returnCharge(charge) {
+        var text = "\n充電中"
+        if (charge) {
+            text = "\n充電中";
+        } else {
+            text = "";
+        }
+        return text;
+    }
+
+
+    //週を返す
+    function getWeek(count) {
+        var week = '日曜';
+        switch (count) {
+            case 0:
+                week = '日曜';
+                break;
+            case 1:
+                week = '月曜';
+                break;
+            case 2:
+                week = '火曜';
+                break;
+            case 3:
+                week = '水曜';
+                break;
+            case 4:
+                week = '木曜';
+                break;
+            case 5:
+                week = '金曜';
+                break;
+            case 6:
+                week = '土曜';
+                break;
+        }
+        return week;
+    }
+
+</script>
+
+</html>
