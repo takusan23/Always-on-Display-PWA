@@ -8,7 +8,7 @@
     <title>AOD PWA</title>
 </head>
 
-<body bgcolor="#000000" onload="showTime();">
+<body bgcolor="#000000" onload="showTime();getBatteryLevel();">
     <div id="space" style="height:100px;"></div>
     <div id="main">
         <div align="center" id="time_div">
@@ -94,12 +94,16 @@
             battery_text.innerText = '';
         }
     }
+    //10秒ごとにバッテリー残量通知する関数を呼ぶ
+    setInterval('getBatteryLevel()', 10000);
+
 
     //充電・放電
     function returnCharge(charge) {
         var text = "\n充電中"
         if (charge) {
-            text = "\n充電中";
+            text = "\n充電中\n";
+            text += '残り充電時間 : ' + navigator.chargingTime;
         } else {
             text = "";
         }
