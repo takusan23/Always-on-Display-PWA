@@ -2,11 +2,20 @@
 <html lang="jp">
 
 <head>
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AOD PWA</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100" rel="stylesheet">
+    <!-- PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('serviceworker.js') 
+                .then(function () { console.log('Service Worker Registered'); });
+        }
+    </script>
 </head>
 
 <body bgcolor="#000000" onload="showTime();" style="font-family: 'Noto Sans JP', sans-serif;">
