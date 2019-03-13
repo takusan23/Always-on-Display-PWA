@@ -48,6 +48,7 @@
         var date_string = dd.getFullYear() + '年' + (dd.getMonth() + 1) + '月' + dd.getDate() + '日 ' + getWeek(dd.getDay()) + '日';
         text.innerText = time_string;
         day.innerText = date_string;
+        getNetworkType();
     }
     //一秒ごとに時間出す関数を呼ぶ
     setInterval('showTime()', 1000);
