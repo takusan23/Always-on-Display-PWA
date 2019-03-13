@@ -12,7 +12,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker
-                .register('serviceworker.js') 
+                .register('serviceworker.js')
                 .then(function () { console.log('Service Worker Registered'); });
         }
     </script>
@@ -26,6 +26,9 @@
         </div>
         <div align="center" id="day_div">
             <font color="#ffffff" id="day_text" size="5"></font>
+        </div>
+        <div align="center" id="data_div">
+            <font color="#ffffff" id="data_text" size="3"></font>
         </div>
     </div>
 
@@ -100,6 +103,26 @@
         }
         return week;
     }
+
+    //ネットワークタイプを返す
+    function getNetworkType() {
+        var data_text = document.getElementById('data_text');
+        //分ける
+        switch (navigator.connection.type) {
+            case 'bluetooch':
+                data_text.innerText = 'Bluetoothでネットワーク接続中'
+                break;
+            case 'cellular':
+                data_text.innerText = 'モバイルデータでネットワーク接続中'
+                break;
+            case 'wifi':
+                data_text.innerText = 'Wi-Fiでネットワーク接続中'
+                break;
+        }
+    }
+    //10秒ごとにネットワーク状態を確認する関数を呼ぶ
+    setInterval('getNetworkType()', 10000);
+
 
 </script>
 
