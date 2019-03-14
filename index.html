@@ -18,7 +18,7 @@
     </script>
 </head>
 
-<body bgcolor="#000000" onload="showTime();" style="font-family: 'Noto Sans JP', sans-serif;">
+<body bgcolor="#000000" onload="showTime();" onclick="memoDialog();" style="font-family: 'Noto Sans JP', sans-serif;">
     <div id="space" style="height:100px;"></div>
     <div id="main">
         <div align="center" id="time_div">
@@ -29,6 +29,9 @@
         </div>
         <div align="center" id="data_div">
             <font color="#ffffff" id="data_text" size="3"></font>
+        </div>
+        <div align="center" id="memo_div">
+            <font color="#ffffff" id="memo_text" size="3"></font>
         </div>
     </div>
 
@@ -48,7 +51,10 @@
         var date_string = dd.getFullYear() + '年' + (dd.getMonth() + 1) + '月' + dd.getDate() + '日 ' + getWeek(dd.getDay()) + '日';
         text.innerText = time_string;
         day.innerText = date_string;
+        //ネットワーク
         getNetworkType();
+        //メモ
+        showMemo();
     }
     //一秒ごとに時間出す関数を呼ぶ
     setInterval('showTime()', 1000);
@@ -123,6 +129,35 @@
     }
     //10秒ごとにネットワーク状態を確認する関数を呼ぶ
     setInterval('getNetworkType()', 10000);
+
+    //メモ入力ダイアログ
+    function memoDialog() {
+        var memo = '';
+        //LocalStorageの値を取得する
+        if (localStorage.getItem('memo') == null) {
+            //ない
+            //LocalStorageに保存する
+            memo = window.prompt('メモとかどうぞ', '');
+            localStorage.setItem('memo', memo);
+        } else {
+            //ある
+            //あるけどダイアログは出しておく
+            memo = window.prompt('メモとかどうぞ', localStorage.getItem('memo'));
+            localStorage.setItem('memo', memo);
+        }
+        var memo_text = document.getElementById('memo_text');
+        memo_text.innerText = memo;
+    }
+
+    //メモを取得する
+    function showMemo() {
+        var memo = localStorage.getItem('memo');
+        if (memo != null) {
+            //あれば表示
+            var memo_text = document.getElementById('memo_text');
+            memo_text.innerText = memo;
+        }
+    }
 
 
 </script>
